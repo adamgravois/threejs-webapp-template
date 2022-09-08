@@ -1,11 +1,11 @@
-import { createCamera } from './components/camera.js';
-import { createCube } from './components/cube.js';
-import { createLights } from './components/lights.js';
-import { createScene } from './components/scene.js';
+import { createCamera } from '/src/components/camera.js';
+import { createCube } from '/src/components/cube.js';
+import { createLights } from '/src/components/lights.js';
+import { createScene } from '/src/components/scene.js';
 
-import { createRenderer } from './systems/renderer.js';
-import { Resizer } from './systems/Resizer.js';
-import { Loop } from './systems/Loop.js';
+import { createRenderer } from '/src/systems/renderer.js';
+import { Resizer } from '/src/systems/Resizer.js';
+import { Loop } from '/src/systems/Loop.js';
 
 // by declaring thsese here, they are module-scoped, inaccessible to main.js, which keeps things simple. But if you had two World instances they would share the same vars, which is bad.
 

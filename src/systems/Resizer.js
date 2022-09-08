@@ -23,7 +23,7 @@ const setSize = (container, camera, renderer) => {
             // set the size again if a resize occurs
             setSize(container, camera, renderer);
             this.onResize();
-    }
-  }
-  
+        });
+    };
+  };
   export { Resizer };
