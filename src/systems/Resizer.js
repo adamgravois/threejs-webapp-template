@@ -25,5 +25,8 @@ const setSize = (container, camera, renderer) => {
             this.onResize();
         });
     };
+
+  onResize() {};
+
   };
   export { Resizer };

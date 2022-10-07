@@ -1,11 +1,27 @@
-import { BoxBufferGeometry, Mesh, MeshStandardMaterial } from 'three';
+import { BoxBufferGeometry, MathUtils, Mesh, MeshStandardMaterial, TextureLoader, } from 'three';
 
+function createMaterial() {
+  // create a texture loader.
+  const textureLoader = new TextureLoader();
+
+  // load a texture
+  const texture = textureLoader.load(
+    '/assets/textures/noIcon.png',
+  );
+
+    // create a "standard" material using
+  // the texture we just loaded as a color map
+  const material = new MeshStandardMaterial({
+    map: texture,
+  });
+  return material;
+}
 function createCube() {
   // create a geometry
   const geometry = new BoxBufferGeometry(2, 2, 2);
 
   // create a default (white) Basic material
-  const material = new MeshStandardMaterial({ color: 'purple' });
+  const material = createMaterial();
 
   // create a Mesh containing the geometry and material
   const cube = new Mesh(geometry, material);
