@@ -10,15 +10,20 @@
   <link rel="icon" href="" type="image/x-icon">
 
   <link href="./styles/main.css" rel="stylesheet" type="text/css">
-  <script type="importmap">
+  <!-- Import maps polyfill -->
+  <!-- Remove this when import maps will be widely supported -->
+  <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+  <script type="importmap"> 
     {
         "imports": {
             "three": "https://cdn.skypack.dev/pin/three@v0.132.2-dLPTyDAYt6rc6aB18fLm/mode=imports/optimized/three.js"
         }
     }
-</script>
+  </script>
   <script type="module" src="./src/main.js"></script>
+
 </head>
+
 
 <body>
   <h1>Discoverthreejs.com - Nothing to see here yet :)</h1>

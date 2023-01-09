@@ -1,57 +1,56 @@
-import { createCamera } from '/src/components/camera.js';
-import { createCube } from '/src/components/cube.js';
-import { createLights } from '/src/components/lights.js';
-import { createScene } from '/src/components/scene.js';
+import { loadBirds } from './components/birds/birds.js';
+import { createCamera } from './components/camera.js';
+import { createLights } from './components/lights.js';
+import { createScene } from './components/scene.js';
 
-import { createControls } from '/src/systems/controls.js';
-import { createRenderer } from '/src/systems/renderer.js';
-import { Resizer } from '/src/systems/Resizer.js';
-import { Loop } from '/src/systems/Loop.js';
-
-// by declaring thsese here, they are module-scoped, inaccessible to main.js, which keeps things simple. But if you had two World instances they would share the same vars, which is bad.
+import { createControls } from './systems/controls.js';
+import { createRenderer } from './systems/renderer.js';
+import { Resizer } from './systems/Resizer.js';
+import { Loop } from './systems/Loop.js';
 
 let camera;
+let controls;
 let renderer;
 let scene;
 let loop;
 
 class World {
-    // 1. Create an instance of the World app
-    constructor(container) {
-        camera = createCamera();
-        scene = createScene();
-        renderer = createRenderer();
-        loop = new Loop(camera, scene, renderer);
-        container.append(renderer.domElement);
-        const controls = createControls(camera, renderer.domElement);
+  constructor(container) {
+    camera = createCamera();
+    renderer = createRenderer();
+    scene = createScene();
+    loop = new Loop(camera, scene, renderer);
+    container.append(renderer.domElement);
+    controls = createControls(camera, renderer.domElement);
 
+    const { ambientLight, mainLight } = createLights();
 
+    loop.updatables.push(controls);
+    scene.add(ambientLight, mainLight);
 
-        // geometry creation
-        const cube = createCube();
-
-        const {ambientLight, mainLight} = createLights();
-
-        loop.updatables.push(controls);
-
-        scene.add(cube, ambientLight, mainLight);
-
-        
-        const resizer = new Resizer(container, camera, renderer);
-      
-    }
-  
-    // 2. Render the scene
-    render() {
-        renderer.render(scene, camera);
-    }
-
-    start() {
-        loop.start();
-    }
-    stop() {
-        loop.stop();
-    }
+    const resizer = new Resizer(container, camera, renderer);
   }
-  
-  export { World };
+
+  async init() {
+    const { parrot, flamingo, stork } = await loadBirds();
+
+    // move the target to the center of the front bird
+    controls.target.copy(parrot.position);
+
+    scene.add(parrot, flamingo, stork);
+  }
+
+  render() {
+    renderer.render(scene, camera);
+  }
+
+  start() {
+    loop.start();
+  }
+
+  stop() {
+    loop.stop();
+  }
+}
+
+export { World };
